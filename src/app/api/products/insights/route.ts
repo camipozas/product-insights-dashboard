@@ -30,7 +30,7 @@ export async function GET() {
       totalProducts: products.length,
       categoryCount,
     };
-    
+
     const validatedInsights = ProductInsightsSchema.parse(insights);
 
     return NextResponse.json(validatedInsights, {

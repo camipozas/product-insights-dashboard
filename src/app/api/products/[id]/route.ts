@@ -8,24 +8,21 @@ import { fetchProductById } from '@/lib/dummyjson';
  * @param params - The parameters
  * @returns The product
  */
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const { id } = params;
 
     const idValidation = ProductIdSchema.safeParse(id);
     if (!idValidation.success) {
       return NextResponse.json(
-        { 
-          error: 'Invalid product ID', 
-          message: 'Product ID must be a positive number' 
+        {
+          error: 'Invalid product ID',
+          message: 'Product ID must be a positive number',
         },
         { status: 400 }
       );
     }
-    
+
     const productId = idValidation.data;
 
     const product = await fetchProductById(productId);
@@ -37,10 +34,10 @@ export async function GET(
     });
   } catch (error) {
     console.error('Error fetching product:', error);
-    
+
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const isNotFound = errorMessage.includes('not found');
-    
+
     return NextResponse.json(
       {
         error: isNotFound ? 'Product not found' : 'Failed to fetch product',

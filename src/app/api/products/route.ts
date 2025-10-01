@@ -11,7 +11,7 @@ export async function GET() {
   try {
     const products = await fetchAllProducts();
 
-    const trimmedProducts: ProductSummary[] = products.map((product) => 
+    const trimmedProducts: ProductSummary[] = products.map((product) =>
       ProductSummarySchema.parse({
         id: product.id,
         title: product.title,

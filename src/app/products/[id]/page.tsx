@@ -8,7 +8,7 @@ import type { Product } from '@/types/product';
 export default function ProductDetailPage() {
   const params = useParams();
   const id = params.id as string;
-  
+
   const [product, setProduct] = useState<Product | null>(null);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const [loading, setLoading] = useState(true);
@@ -27,7 +27,7 @@ export default function ProductDetailPage() {
           throw new Error('Failed to fetch product');
         }
 
-        const data: Product = await response.json();
+        const data = (await response.json()) as Product;
         setProduct(data);
         setSelectedImage(data.images[0] || data.thumbnail);
       } catch (err) {
@@ -37,7 +37,7 @@ export default function ProductDetailPage() {
       }
     }
 
-    fetchProduct();
+    void fetchProduct();
   }, [id]);
 
   if (loading) {
@@ -69,11 +69,7 @@ export default function ProductDetailPage() {
         <div className="product-detail-header">
           {/* Product Images */}
           <div className="product-images">
-            <img
-              src={selectedImage}
-              alt={product.title}
-              className="product-main-image"
-            />
+            <img src={selectedImage} alt={product.title} className="product-main-image" />
             {product.images.length > 1 && (
               <div className="product-thumbnails">
                 {product.images.map((image, index) => (
@@ -92,7 +88,7 @@ export default function ProductDetailPage() {
           {/* Product Info */}
           <div className="product-info">
             <h1>{product.title}</h1>
-            
+
             <div className="product-meta">
               <div className="product-meta-item">
                 <label>Price</label>

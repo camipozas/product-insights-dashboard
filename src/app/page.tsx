@@ -14,7 +14,7 @@ export default function DashboardPage() {
     async function fetchData() {
       try {
         setLoading(true);
-        
+
         const [productsRes, insightsRes] = await Promise.all([
           fetch('/api/products'),
           fetch('/api/products/insights'),
@@ -24,8 +24,11 @@ export default function DashboardPage() {
           throw new Error('Failed to fetch data');
         }
 
-        const productsData = await productsRes.json();
-        const insightsData = await insightsRes.json();
+        const productsData = (await productsRes.json()) as {
+          products: ProductSummary[];
+          total: number;
+        };
+        const insightsData = (await insightsRes.json()) as ProductInsights;
 
         setProducts(productsData.products);
         setInsights(insightsData);
@@ -36,7 +39,7 @@ export default function DashboardPage() {
       }
     }
 
-    fetchData();
+    void fetchData();
   }, []);
 
   if (loading) {
