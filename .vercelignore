@@ -13,11 +13,6 @@ playwright-report/
 blob-report/
 playwright/.cache/
 
-# Docker
-Dockerfile
-docker-compose.yml
-.dockerignore
-
 # CI/CD
 .github/
 
