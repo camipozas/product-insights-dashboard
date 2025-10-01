@@ -57,29 +57,26 @@ export default function SearchFilter({ products, onFilteredProducts }: SearchFil
   }, [filterProducts]);
 
   return (
-    <div className="search-filter bg-white p-6 rounded-lg shadow-md mb-6">
-      <h3 className="text-lg font-semibold mb-4">Search & Filter Products</h3>
+    <div className="bg-white rounded-lg shadow p-6">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">Search & Filter Products</h3>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Search by name */}
-        <div>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* Search Input */}
+        <div className="md:col-span-2">
           <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
-            Search by name
+            Search by product name
           </label>
           <input
             id="search"
             type="text"
-            placeholder="Enter product name..."
+            placeholder="Type product name here..."
             value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              filterProducts();
-            }}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
-        {/* Category filter */}
+        {/* Category Select */}
         <div>
           <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
             Category
@@ -87,11 +84,8 @@ export default function SearchFilter({ products, onFilteredProducts }: SearchFil
           <select
             id="category"
             value={selectedCategory}
-            onChange={(e) => {
-              setSelectedCategory(e.target.value);
-              filterProducts();
-            }}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">All Categories</option>
             {categories.map(category => (
@@ -102,51 +96,40 @@ export default function SearchFilter({ products, onFilteredProducts }: SearchFil
           </select>
         </div>
 
-        {/* Min price */}
-        <div>
-          <label htmlFor="minPrice" className="block text-sm font-medium text-gray-700 mb-1">
-            Min Price ($)
-          </label>
-          <input
-            id="minPrice"
-            type="number"
-            placeholder="0"
-            value={priceRange.min}
-            onChange={(e) => {
-              setPriceRange({ ...priceRange, min: e.target.value });
-              filterProducts();
-            }}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        {/* Max price */}
-        <div>
-          <label htmlFor="maxPrice" className="block text-sm font-medium text-gray-700 mb-1">
-            Max Price ($)
-          </label>
-          <input
-            id="maxPrice"
-            type="number"
-            placeholder="1000"
-            value={priceRange.max}
-            onChange={(e) => {
-              setPriceRange({ ...priceRange, max: e.target.value });
-              filterProducts();
-            }}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+        {/* Clear Button */}
+        <div className="flex items-end">
+          <button
+            onClick={clearFilters}
+            className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors font-medium"
+          >
+            Clear Filters
+          </button>
         </div>
       </div>
 
-      {/* Clear filters button */}
-      <div className="mt-4 flex justify-end">
-        <button
-          onClick={clearFilters}
-          className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
-        >
-          Clear Filters
-        </button>
+      {/* Price Range */}
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Price Range
+        </label>
+        <div className="grid grid-cols-2 gap-4">
+          <input
+            id="minPrice"
+            type="number"
+            placeholder="Min price"
+            value={priceRange.min}
+            onChange={(e) => setPriceRange({ ...priceRange, min: e.target.value })}
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+          <input
+            id="maxPrice"
+            type="number"
+            placeholder="Max price"
+            value={priceRange.max}
+            onChange={(e) => setPriceRange({ ...priceRange, max: e.target.value })}
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
       </div>
     </div>
   );
