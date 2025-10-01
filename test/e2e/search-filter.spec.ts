@@ -8,9 +8,10 @@ test.describe('Search and Filter Functionality', () => {
   test('should display search and filter controls', async ({ page }) => {
     await expect(page.locator('input[placeholder="Enter product name..."]')).toBeVisible();
     await expect(page.locator('select')).toBeVisible();
-    await expect(page.locator('input[placeholder="0"]')).toBeVisible();
-    await expect(page.locator('input[placeholder="1000"]')).toBeVisible();
-    await expect(page.getByText('Clear Filters')).toBeVisible();
+    await expect(page.locator('input[placeholder="Min"]')).toBeVisible();
+    await expect(page.locator('input[placeholder="Max"]')).toBeVisible();
+    await expect(page.getByText('Apply Filters')).toBeVisible();
+    await expect(page.getByText('Clear')).toBeVisible();
   });
 
   test('should filter products by name search', async ({ page }) => {
@@ -19,6 +20,9 @@ test.describe('Search and Filter Functionality', () => {
     const initialCount = await page.locator('tbody tr').count();
 
     await page.locator('input[placeholder="Enter product name..."]').fill('iPhone');
+    
+    // Click the search button
+    await page.locator('button[type="button"]').first().click();
 
     await page.waitForTimeout(500);
 

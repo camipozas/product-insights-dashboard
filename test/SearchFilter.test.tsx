@@ -44,11 +44,11 @@ describe('SearchFilter', () => {
   it('should render all filter controls', () => {
     render(<SearchFilter products={mockProducts} onFilteredProducts={mockOnFilteredProducts} />);
 
-    expect(screen.getByLabelText('Search by name')).toBeInTheDocument();
+    expect(screen.getByLabelText('Search by product name')).toBeInTheDocument();
     expect(screen.getByLabelText('Category')).toBeInTheDocument();
-    expect(screen.getByLabelText('Min Price ($)')).toBeInTheDocument();
-    expect(screen.getByLabelText('Max Price ($)')).toBeInTheDocument();
-    expect(screen.getByText('Clear Filters')).toBeInTheDocument();
+    expect(screen.getByLabelText('Price Range')).toBeInTheDocument();
+    expect(screen.getByText('Apply Filters')).toBeInTheDocument();
+    expect(screen.getByText('Clear All')).toBeInTheDocument();
   });
 
   it('should populate category dropdown with unique categories', () => {
@@ -65,8 +65,12 @@ describe('SearchFilter', () => {
   it('should filter products by name search', async () => {
     render(<SearchFilter products={mockProducts} onFilteredProducts={mockOnFilteredProducts} />);
 
-    const searchInput = screen.getByLabelText('Search by name');
+    const searchInput = screen.getByLabelText('Search by product name');
     fireEvent.change(searchInput, { target: { value: 'iPhone' } });
+    
+    // Click the search button
+    const searchButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(searchButton);
 
     await waitFor(() => {
       expect(mockOnFilteredProducts).toHaveBeenCalledWith([
@@ -92,8 +96,12 @@ describe('SearchFilter', () => {
   it('should filter products by minimum price', async () => {
     render(<SearchFilter products={mockProducts} onFilteredProducts={mockOnFilteredProducts} />);
 
-    const minPriceInput = screen.getByLabelText('Min Price ($)');
+    const minPriceInput = screen.getByPlaceholderText('Min price');
     fireEvent.change(minPriceInput, { target: { value: '1000' } });
+    
+    // Click Apply Filters button
+    const applyButton = screen.getByText('Apply Filters');
+    fireEvent.click(applyButton);
 
     await waitFor(() => {
       expect(mockOnFilteredProducts).toHaveBeenCalledWith([
@@ -107,8 +115,12 @@ describe('SearchFilter', () => {
   it('should filter products by maximum price', async () => {
     render(<SearchFilter products={mockProducts} onFilteredProducts={mockOnFilteredProducts} />);
 
-    const maxPriceInput = screen.getByLabelText('Max Price ($)');
+    const maxPriceInput = screen.getByPlaceholderText('Max price');
     fireEvent.change(maxPriceInput, { target: { value: '1000' } });
+    
+    // Click Apply Filters button
+    const applyButton = screen.getByText('Apply Filters');
+    fireEvent.click(applyButton);
 
     await waitFor(() => {
       expect(mockOnFilteredProducts).toHaveBeenCalledWith([
@@ -123,8 +135,12 @@ describe('SearchFilter', () => {
     const categorySelect = screen.getByLabelText('Category');
     fireEvent.change(categorySelect, { target: { value: 'smartphones' } });
 
-    const minPriceInput = screen.getByLabelText('Min Price ($)');
+    const minPriceInput = screen.getByPlaceholderText('Min price');
     fireEvent.change(minPriceInput, { target: { value: '800' } });
+    
+    // Click Apply Filters button
+    const applyButton = screen.getByText('Apply Filters');
+    fireEvent.click(applyButton);
 
     await waitFor(() => {
       expect(mockOnFilteredProducts).toHaveBeenCalledWith([
@@ -145,7 +161,7 @@ describe('SearchFilter', () => {
     fireEvent.change(searchInput, { target: { value: 'iPhone' } });
     fireEvent.change(categorySelect, { target: { value: 'smartphones' } });
 
-    const clearButton = screen.getByText('Clear Filters');
+    const clearButton = screen.getByText('Clear');
     fireEvent.click(clearButton);
 
     await waitFor(() => {
@@ -169,11 +185,36 @@ describe('SearchFilter', () => {
   it('should handle invalid price inputs gracefully', async () => {
     render(<SearchFilter products={mockProducts} onFilteredProducts={mockOnFilteredProducts} />);
 
-    const minPriceInput = screen.getByLabelText('Min Price ($)');
+    const minPriceInput = screen.getByPlaceholderText('Min');
     fireEvent.change(minPriceInput, { target: { value: 'invalid' } });
+    
+    // Click Apply Filters button
+    const applyButton = screen.getByText('Apply Filters');
+    fireEvent.click(applyButton);
 
     await waitFor(() => {
       expect(mockOnFilteredProducts).toHaveBeenCalledWith(mockProducts);
     });
+  });
+
+  it('should trigger search on Enter key press', async () => {
+    render(<SearchFilter products={mockProducts} onFilteredProducts={mockOnFilteredProducts} />);
+
+    const searchInput = screen.getByLabelText('Search by name');
+    fireEvent.change(searchInput, { target: { value: 'iPhone' } });
+    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
+
+    await waitFor(() => {
+      expect(mockOnFilteredProducts).toHaveBeenCalledWith([
+        expect.objectContaining({ title: 'iPhone 13 Pro' }),
+      ]);
+    });
+  });
+
+  it('should render search icon button', () => {
+    render(<SearchFilter products={mockProducts} onFilteredProducts={mockOnFilteredProducts} />);
+
+    const searchButton = screen.getByRole('button', { name: /search/i });
+    expect(searchButton).toBeInTheDocument();
   });
 });
