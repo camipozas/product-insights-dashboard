@@ -13,27 +13,27 @@ describe('DummyJSON utilities', () => {
     it('should fetch all products with pagination as products', async () => {
       const mockFirstPage = {
         products: [
-          { 
-            id: 1, 
-            title: 'Product 1', 
+          {
+            id: 1,
+            title: 'Product 1',
             description: 'Test description',
-            price: 10, 
-            category: 'test', 
-            thumbnail: 'https://example.com/url1.jpg', 
-            rating: 4, 
-            stock: 10, 
-            images: ['https://example.com/url1.jpg'] 
+            price: 10,
+            category: 'test',
+            thumbnail: 'https://example.com/url1.jpg',
+            rating: 4,
+            stock: 10,
+            images: ['https://example.com/url1.jpg'],
           },
-          { 
-            id: 2, 
-            title: 'Product 2', 
+          {
+            id: 2,
+            title: 'Product 2',
             description: 'Test description 2',
-            price: 20, 
-            category: 'test', 
-            thumbnail: 'https://example.com/url2.jpg', 
-            rating: 5, 
-            stock: 5, 
-            images: ['https://example.com/url2.jpg'] 
+            price: 20,
+            category: 'test',
+            thumbnail: 'https://example.com/url2.jpg',
+            rating: 5,
+            stock: 5,
+            images: ['https://example.com/url2.jpg'],
           },
         ],
         total: 2,
