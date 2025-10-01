@@ -2,7 +2,7 @@
 
 A minimal product analytics dashboard that fetches data from DummyJSON and displays key metrics and product information.
 
-🔗 **Live Demo**: [[product-insights-dashboard-rosy.vercel.app](https://product-insights-dashboard-rosy.vercel.app/)](<[product-insights-dashboard-rosy.vercel.app](https://product-insights-dashboard-rosy.vercel.app/)>)
+🔗 **Live Demo**: [product-insights-dashboard-rosy.vercel.app](https://product-insights-dashboard-rosy.vercel.app/)
 
 ## Features
 
