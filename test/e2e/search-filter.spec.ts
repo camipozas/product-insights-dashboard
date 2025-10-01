@@ -6,12 +6,11 @@ test.describe('Search and Filter Functionality', () => {
   });
 
   test('should display search and filter controls', async ({ page }) => {
-    await expect(page.locator('input[placeholder="Enter product name..."]')).toBeVisible();
+    await expect(page.locator('input[placeholder="Type product name here..."]')).toBeVisible();
     await expect(page.locator('select')).toBeVisible();
-    await expect(page.locator('input[placeholder="Min"]')).toBeVisible();
-    await expect(page.locator('input[placeholder="Max"]')).toBeVisible();
-    await expect(page.getByText('Apply Filters')).toBeVisible();
-    await expect(page.getByText('Clear')).toBeVisible();
+    await expect(page.locator('input[placeholder="Min price"]')).toBeVisible();
+    await expect(page.locator('input[placeholder="Max price"]')).toBeVisible();
+    await expect(page.getByText('Clear Filters')).toBeVisible();
   });
 
   test('should filter products by name search', async ({ page }) => {
@@ -19,10 +18,7 @@ test.describe('Search and Filter Functionality', () => {
 
     const initialCount = await page.locator('tbody tr').count();
 
-    await page.locator('input[placeholder="Enter product name..."]').fill('iPhone');
-    
-    // Click the search button
-    await page.locator('button[type="button"]').first().click();
+    await page.locator('input[placeholder="Type product name here..."]').fill('iPhone');
 
     await page.waitForTimeout(500);
 
@@ -30,7 +26,7 @@ test.describe('Search and Filter Functionality', () => {
     expect(filteredCount).toBeLessThan(initialCount);
 
     const productTitles = await page.locator('tbody tr td:nth-child(2) a').allTextContents();
-    productTitles.forEach(title => {
+    productTitles.forEach((title) => {
       expect(title.toLowerCase()).toContain('iphone');
     });
   });
@@ -48,7 +44,7 @@ test.describe('Search and Filter Functionality', () => {
     expect(filteredCount).toBeLessThan(initialCount);
 
     const productCategories = await page.locator('tbody tr td:nth-child(4)').allTextContents();
-    productCategories.forEach(category => {
+    productCategories.forEach((category) => {
       expect(category).toBe('smartphones');
     });
   });
@@ -56,12 +52,12 @@ test.describe('Search and Filter Functionality', () => {
   test('should filter products by price range', async ({ page }) => {
     await page.waitForSelector('tbody tr');
 
-    await page.locator('input[placeholder="0"]').fill('100');
+    await page.locator('input[placeholder="Min price"]').fill('100');
 
     await page.waitForTimeout(500);
 
     const productPrices = await page.locator('tbody tr td:nth-child(3) span').allTextContents();
-    productPrices.forEach(priceText => {
+    productPrices.forEach((priceText) => {
       const price = parseFloat(priceText.replace('$', ''));
       expect(price).toBeGreaterThanOrEqual(100);
     });
@@ -70,9 +66,9 @@ test.describe('Search and Filter Functionality', () => {
   test('should combine multiple filters', async ({ page }) => {
     await page.waitForSelector('tbody tr');
 
-    await page.locator('input[placeholder="Enter product name..."]').fill('iPhone');
+    await page.locator('input[placeholder="Type product name here..."]').fill('iPhone');
     await page.locator('select').selectOption('smartphones');
-    await page.locator('input[placeholder="0"]').fill('500');
+    await page.locator('input[placeholder="Min price"]').fill('500');
 
     await page.waitForTimeout(500);
 
@@ -95,7 +91,7 @@ test.describe('Search and Filter Functionality', () => {
   test('should clear all filters', async ({ page }) => {
     await page.waitForSelector('tbody tr');
 
-    await page.locator('input[placeholder="Enter product name..."]').fill('iPhone');
+    await page.locator('input[placeholder="Type product name here..."]').fill('iPhone');
     await page.locator('select').selectOption('smartphones');
 
     await page.waitForTimeout(500);
@@ -109,7 +105,7 @@ test.describe('Search and Filter Functionality', () => {
     const allCount = await page.locator('tbody tr').count();
     expect(allCount).toBeGreaterThan(filteredCount);
 
-    await expect(page.locator('input[placeholder="Enter product name..."]')).toHaveValue('');
+    await expect(page.locator('input[placeholder="Type product name here..."]')).toHaveValue('');
     await expect(page.locator('select')).toHaveValue('');
   });
 
@@ -125,7 +121,7 @@ test.describe('Search and Filter Functionality', () => {
     const initialCountText = await page.getByText(/Showing \d+ of \d+ products/).textContent();
     const initialCount = parseInt(initialCountText!.match(/(\d+)/)![1]);
 
-    await page.locator('input[placeholder="Enter product name..."]').fill('iPhone');
+    await page.locator('input[placeholder="Type product name here..."]').fill('iPhone');
 
     await page.waitForTimeout(500);
 

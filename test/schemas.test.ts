@@ -4,7 +4,7 @@ import {
   ProductSummarySchema,
   ProductInsightsSchema,
   ProductIdSchema,
-  } from '../src/types/schemas';
+} from '../src/types/schemas';
 
 describe('Zod schemas', () => {
   describe('ProductSchema', () => {
