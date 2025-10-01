@@ -4,7 +4,7 @@ import type { ProductInsights } from '@/types/schemas';
 import { fetchAllProducts } from '@/lib/dummyjson';
 
 /**
- * Get the insights
+ * Get the insights for the products
  * @returns The insights
  */
 export async function GET() {
