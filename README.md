@@ -73,7 +73,7 @@ npm run format
 npm run check
 ```
 
-> ![NOTE] We don't need environment variables for this project.
+> [!NOTE] We don't need environment variables for this project.
 
 ## Key Decisions
 
