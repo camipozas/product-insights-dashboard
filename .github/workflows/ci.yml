@@ -30,22 +30,11 @@ jobs:
             - name: Check Prettier formatting
               run: npm run format:check
 
-            - name: Run unit tests
-              run: npm run test:run
+            - name: Run tests with coverage
+              run: npm run test:coverage
 
             - name: Run E2E tests
               run: npm run test:e2e
 
-            - name: Run tests with coverage
-              run: npm run test:coverage
-
             - name: Build project
               run: npm run build
-
-            - name: Upload coverage reports
-              uses: codecov/codecov-action@v4
-              with:
-                  file: ./coverage/lcov.info
-                  flags: unittests
-                  name: codecov-umbrella
-                  fail_ci_if_error: false
