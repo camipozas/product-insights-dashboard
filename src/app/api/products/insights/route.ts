@@ -2,13 +2,18 @@ import { NextResponse } from 'next/server';
 import { ProductInsightsSchema } from '@/types/schemas';
 import type { ProductInsights } from '@/types/schemas';
 import { fetchAllProducts } from '@/lib/dummyjson';
+import { logger } from '@/lib/logger';
 
 /**
  * Get the insights for the products
  * @returns The insights
  */
 export async function GET() {
+  const startTime = Date.now();
+  
   try {
+    logger.info('Calculating product insights');
+    
     const products = await fetchAllProducts();
 
     const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
@@ -33,13 +38,23 @@ export async function GET() {
 
     const validatedInsights = ProductInsightsSchema.parse(insights);
 
+    const duration = Date.now() - startTime;
+    logger.apiRequest('GET', '/api/products/insights', duration, {
+      averagePrice,
+      topCategory,
+      totalProducts: products.length,
+      categoriesCount: Object.keys(categoryCount).length,
+    });
+
     return NextResponse.json(validatedInsights, {
       headers: {
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
       },
     });
   } catch (error) {
-    console.error('Error calculating insights:', error);
+    const duration = Date.now() - startTime;
+    logger.apiError('GET', '/api/products/insights', 500, error, { duration });
+    
     return NextResponse.json(
       {
         error: 'Failed to calculate insights',
