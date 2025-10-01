@@ -9,14 +9,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
-        <header className="header">
-          <div className="container">
-            <h1>Product Insights Dashboard</h1>
-          </div>
-        </header>
-        <main>{children}</main>
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
