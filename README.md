@@ -15,7 +15,7 @@ A minimal product analytics dashboard that fetches data from DummyJSON and displ
 ## Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
-- **Styling**: Tailwind CSS v4
+- **Styling**: Tailwind CSS v3 (For stability reasons)
 - **Language**: TypeScript (strict mode)
 - **Data Validation**: Zod
 - **Testing**: Vitest (unit) + Playwright (E2E)
@@ -90,6 +90,20 @@ Added runtime validation to catch issues from the external API early. It's saved
 
 **API Structure**
 Created a shared utility (`src/lib/dummyjson.ts`) to handle all API calls with proper pagination. This avoids hitting the API limit and keeps the code DRY.
+
+**Logging & Observability**
+Added basic logging (`src/lib/logger.ts`) that tracks:
+
+- API request timing and performance
+- Error occurrences with stack traces
+- Request metadata (product IDs, counts, etc.)
+
+Logs show up in:
+
+- **Development**: Terminal console with timestamps
+- **Production (Vercel)**: Runtime Logs tab in Vercel dashboard (real-time during function execution)
+
+The logger uses `console.log/warn/error` under the hood, which works fine for this scale. For a larger production app, I'd swap this for Pino, Winston, or pipe it to DataDog/Sentry.
 
 ### Product & UX
 
