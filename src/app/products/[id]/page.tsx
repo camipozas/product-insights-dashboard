@@ -57,8 +57,8 @@ export default function ProductDetailPage() {
         <div className="text-center p-8 bg-white rounded-lg shadow-lg max-w-md">
           <p className="text-red-600 text-xl font-semibold mb-4">Error</p>
           <p className="text-gray-600 mb-6">{error || 'Product not found'}</p>
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="inline-block px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
           >
             Back to Dashboard
@@ -91,7 +91,7 @@ export default function ProductDetailPage() {
                   className="w-full h-96 object-cover rounded-lg"
                 />
               </div>
-              
+
               {product.images.length > 1 && (
                 <div className="grid grid-cols-4 gap-2">
                   {product.images.map((image, index) => (
@@ -99,8 +99,8 @@ export default function ProductDetailPage() {
                       key={index}
                       onClick={() => setSelectedImage(image)}
                       className={`border-2 rounded-lg overflow-hidden ${
-                        selectedImage === image 
-                          ? 'border-blue-500' 
+                        selectedImage === image
+                          ? 'border-blue-500'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
@@ -117,9 +117,7 @@ export default function ProductDetailPage() {
 
             {/* Product Info */}
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                {product.title}
-              </h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.title}</h1>
 
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-4xl font-bold text-blue-600">
@@ -143,9 +141,7 @@ export default function ProductDetailPage() {
 
               <div className="mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {product.description}
-                </p>
+                <p className="text-gray-600 leading-relaxed">{product.description}</p>
               </div>
 
               <div className="flex gap-4">

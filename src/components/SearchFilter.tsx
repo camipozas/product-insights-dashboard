@@ -13,32 +13,32 @@ export default function SearchFilter({ products, onFilteredProducts }: SearchFil
   const [selectedCategory, setSelectedCategory] = useState('');
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
 
-  const categories = Array.from(new Set(products.map(product => product.category))).sort();
+  const categories = Array.from(new Set(products.map((product) => product.category))).sort();
 
   const filterProducts = useCallback(() => {
     let filtered = products;
 
     if (searchTerm) {
-      filtered = filtered.filter(product =>
+      filtered = filtered.filter((product) =>
         product.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (selectedCategory) {
-      filtered = filtered.filter(product => product.category === selectedCategory);
+      filtered = filtered.filter((product) => product.category === selectedCategory);
     }
 
     if (priceRange.min) {
       const minPrice = parseFloat(priceRange.min);
       if (!isNaN(minPrice)) {
-        filtered = filtered.filter(product => product.price >= minPrice);
+        filtered = filtered.filter((product) => product.price >= minPrice);
       }
     }
 
     if (priceRange.max) {
       const maxPrice = parseFloat(priceRange.max);
       if (!isNaN(maxPrice)) {
-        filtered = filtered.filter(product => product.price <= maxPrice);
+        filtered = filtered.filter((product) => product.price <= maxPrice);
       }
     }
 
@@ -59,7 +59,7 @@ export default function SearchFilter({ products, onFilteredProducts }: SearchFil
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Search & Filter Products</h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Search Input */}
         <div className="md:col-span-2">
@@ -88,7 +88,7 @@ export default function SearchFilter({ products, onFilteredProducts }: SearchFil
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">All Categories</option>
-            {categories.map(category => (
+            {categories.map((category) => (
               <option key={category} value={category}>
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </option>
@@ -109,9 +109,7 @@ export default function SearchFilter({ products, onFilteredProducts }: SearchFil
 
       {/* Price Range */}
       <div className="mt-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Price Range
-        </label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Price Range</label>
         <div className="grid grid-cols-2 gap-4">
           <input
             id="minPrice"
