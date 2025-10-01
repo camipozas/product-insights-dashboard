@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { fetchAllProducts, fetchProductById } from '../dummyjson';
+import { fetchAllProducts, fetchProductById } from '../src/lib/dummyjson';
 
 const mockFetch = vi.fn();
 global.fetch = mockFetch as unknown as typeof fetch;
