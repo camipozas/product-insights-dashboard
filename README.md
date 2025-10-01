@@ -15,7 +15,7 @@ A minimal product analytics dashboard that fetches data from DummyJSON and displ
 ## Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
-- **Styling**: Tailwind CSS v4
+- **Styling**: Tailwind CSS v3 (For stability reasons)
 - **Language**: TypeScript (strict mode)
 - **Data Validation**: Zod
 - **Testing**: Vitest (unit) + Playwright (E2E)
