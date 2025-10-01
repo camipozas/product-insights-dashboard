@@ -33,7 +33,24 @@ jobs:
             - name: Test Docker container
               run: |
                   docker run -d --name test-container -p 8080:3000 product-insights-dashboard
-                  sleep 10
+
+                  # Wait for the container to become healthy (timeout after 30s)
+                  echo "Waiting for container to start..."
+                  for i in {1..30}; do
+                      if curl -f http://localhost:8080/api/health >/dev/null 2>&1; then
+                          echo "Container is healthy!"
+                          break
+                      fi
+                      echo "Attempt $i/30: Container not ready yet..."
+                      sleep 1
+                  done
+
+                  # Test health endpoint
+                  curl -f http://localhost:8080/api/health || exit 1
+
+                  # Test main API endpoint
                   curl -f http://localhost:8080/api/products/insights || exit 1
+
+                  # Cleanup
                   docker stop test-container
                   docker rm test-container
