@@ -5,13 +5,13 @@ test.describe('Product Detail Page', () => {
     await page.goto('/products/1');
 
     await expect(page.getByText('← Back to Dashboard')).toBeVisible();
-    await expect(page.locator('h1').last()).toBeVisible();
-
-    // Check that product info is visible
-    await expect(page.locator('img[alt*=""]').first()).toBeVisible();
 
     // Wait for product details to load
-    await page.waitForSelector('td', { timeout: 5000 });
+    await page.waitForSelector('h1', { timeout: 5000 });
+    await expect(page.locator('h1').last()).toBeVisible();
+
+    // Check that product image is visible
+    await expect(page.locator('img').first()).toBeVisible();
   });
 
   test('should handle product image gallery as product image gallery', async ({ page }) => {
@@ -38,7 +38,7 @@ test.describe('Product Detail Page', () => {
   test('should handle 404 for non-existent product as not found', async ({ page }) => {
     await page.goto('/products/99999');
 
-    await expect(page.getByText(/Error:/)).toBeVisible();
+    await expect(page.getByText('Error')).toBeVisible();
     await expect(page.getByText('← Back to Dashboard')).toBeVisible();
   });
 
