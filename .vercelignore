@@ -1,0 +1,32 @@
+# Tests
+test/
+*.test.ts
+*.test.tsx
+*.spec.ts
+playwright.config.ts
+vitest.config.ts
+
+# Test outputs
+coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# CI/CD
+.github/
+
+# Documentation
+*.md
+!README.md
+
+# Development
+.vscode/
+.idea/
+*.log
+
