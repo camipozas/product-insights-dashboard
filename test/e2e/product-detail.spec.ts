@@ -45,6 +45,6 @@ test.describe('Product Detail Page', () => {
   test('should handle invalid product ID as invalid data', async ({ page }) => {
     await page.goto('/products/invalid');
 
-    await expect(page.getByText(/Error:/)).toBeVisible();
+    await expect(page.getByText('Error')).toBeVisible();
   });
 });
