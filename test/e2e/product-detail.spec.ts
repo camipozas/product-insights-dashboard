@@ -39,7 +39,7 @@ test.describe('Product Detail Page', () => {
     await page.goto('/products/99999');
 
     await expect(page.getByText('Error')).toBeVisible();
-    await expect(page.getByText('← Back to Dashboard')).toBeVisible();
+    await expect(page.getByText('Back to Dashboard')).toBeVisible();
   });
 
   test('should handle invalid product ID as invalid data', async ({ page }) => {
