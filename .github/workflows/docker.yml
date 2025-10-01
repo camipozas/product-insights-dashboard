@@ -1,0 +1,56 @@
+name: Docker Verification
+
+on:
+    push:
+        branches: [main, develop]
+    pull_request:
+        branches: ["*"]
+
+jobs:
+    docker-test:
+        name: Docker Build and Test
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build project
+              run: npm run build
+
+            - name: Build Docker image
+              run: docker build -t product-insights-dashboard .
+
+            - name: Test Docker container
+              run: |
+                  docker run -d --name test-container -p 8080:3000 product-insights-dashboard
+
+                  # Wait for the container to become healthy (timeout after 30s)
+                  echo "Waiting for container to start..."
+                  for i in {1..30}; do
+                      if curl -f http://localhost:8080/api/health >/dev/null 2>&1; then
+                          echo "Container is healthy!"
+                          break
+                      fi
+                      echo "Attempt $i/30: Container not ready yet..."
+                      sleep 1
+                  done
+
+                  # Test health endpoint
+                  curl -f http://localhost:8080/api/health || exit 1
+
+                  # Test main API endpoint
+                  curl -f http://localhost:8080/api/products/insights || exit 1
+
+                  # Cleanup
+                  docker stop test-container
+                  docker rm test-container
