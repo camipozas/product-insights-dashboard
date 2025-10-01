@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import SearchFilter from '@/components/SearchFilter';
 import type { ProductSummary, ProductInsights } from '@/types/product';
 
 export default function DashboardPage() {
   const [products, setProducts] = useState<ProductSummary[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductSummary[]>([]);
   const [insights, setInsights] = useState<ProductInsights | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,6 +33,7 @@ export default function DashboardPage() {
         const insightsData = (await insightsRes.json()) as ProductInsights;
 
         setProducts(productsData.products);
+        setFilteredProducts(productsData.products);
         setInsights(insightsData);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
@@ -78,8 +81,19 @@ export default function DashboardPage() {
         </section>
       )}
 
+      {/* Search and Filter */}
+      <SearchFilter 
+        products={products} 
+        onFilteredProducts={setFilteredProducts} 
+      />
+
       {/* Product List */}
       <section className="product-table-container">
+        <div className="mb-4">
+          <p className="text-gray-600">
+            Showing {filteredProducts.length} of {products.length} products
+          </p>
+        </div>
         <table className="product-table">
           <thead>
             <tr>
@@ -90,7 +104,7 @@ export default function DashboardPage() {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <tr key={product.id}>
                 <td>
                   <Link href={`/products/${product.id}`}>
