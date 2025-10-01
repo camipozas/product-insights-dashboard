@@ -7,7 +7,7 @@ import { logger } from '@/lib/logger';
  */
 export async function GET() {
   logger.debug('Health check requested');
-  
+
   return NextResponse.json(
     {
       status: 'healthy',

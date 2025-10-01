@@ -10,10 +10,10 @@ import { logger } from '@/lib/logger';
  */
 export async function GET() {
   const startTime = Date.now();
-  
+
   try {
     logger.info('Calculating product insights');
-    
+
     const products = await fetchAllProducts();
 
     const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
@@ -54,7 +54,7 @@ export async function GET() {
   } catch (error) {
     const duration = Date.now() - startTime;
     logger.apiError('GET', '/api/products/insights', 500, error, { duration });
-    
+
     return NextResponse.json(
       {
         error: 'Failed to calculate insights',

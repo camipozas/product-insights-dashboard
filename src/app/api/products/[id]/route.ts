@@ -12,7 +12,7 @@ import { logger } from '@/lib/logger';
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const startTime = Date.now();
   const { id } = params;
-  
+
   try {
     logger.info('Fetching product details', { productId: id });
 

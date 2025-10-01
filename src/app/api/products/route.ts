@@ -10,10 +10,10 @@ import { logger } from '@/lib/logger';
  */
 export async function GET() {
   const startTime = Date.now();
-  
+
   try {
     logger.info('Fetching all products');
-    
+
     const products = await fetchAllProducts();
     logger.debug('Products fetched successfully', { count: products.length });
 
@@ -28,8 +28,8 @@ export async function GET() {
     );
 
     const duration = Date.now() - startTime;
-    logger.apiRequest('GET', '/api/products', duration, { 
-      productsCount: trimmedProducts.length 
+    logger.apiRequest('GET', '/api/products', duration, {
+      productsCount: trimmedProducts.length,
     });
 
     return NextResponse.json(
@@ -43,7 +43,7 @@ export async function GET() {
   } catch (error) {
     const duration = Date.now() - startTime;
     logger.apiError('GET', '/api/products', 500, error, { duration });
-    
+
     return NextResponse.json(
       {
         error: 'Failed to fetch products',

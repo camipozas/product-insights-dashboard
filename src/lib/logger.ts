@@ -28,11 +28,14 @@ class Logger {
   error(message: string, error?: Error | unknown, context?: LogContext): void {
     const errorContext = {
       ...context,
-      error: error instanceof Error ? {
-        message: error.message,
-        stack: error.stack,
-        name: error.name,
-      } : error,
+      error:
+        error instanceof Error
+          ? {
+              message: error.message,
+              stack: error.stack,
+              name: error.name,
+            }
+          : error,
     };
     console.error(this.formatMessage('error', message, errorContext));
   }
@@ -58,7 +61,13 @@ class Logger {
   /**
    * Log API error with status code
    */
-  apiError(method: string, path: string, statusCode: number, error?: Error | unknown, context?: LogContext): void {
+  apiError(
+    method: string,
+    path: string,
+    statusCode: number,
+    error?: Error | unknown,
+    context?: LogContext
+  ): void {
     this.error(`API ${method} ${path} failed`, error, {
       method,
       path,
@@ -69,4 +78,3 @@ class Logger {
 }
 
 export const logger = new Logger();
-
