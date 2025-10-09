@@ -143,15 +143,6 @@ export default function ProductDetailPage() {
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
                 <p className="text-gray-600 leading-relaxed">{product.description}</p>
               </div>
-
-              <div className="flex gap-4">
-                <button className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                  Add to Cart
-                </button>
-                <button className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium">
-                  Add to Wishlist
-                </button>
-              </div>
             </div>
           </div>
         </div>
